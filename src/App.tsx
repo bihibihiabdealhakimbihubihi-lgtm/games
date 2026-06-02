@@ -97,20 +97,15 @@ export default function App() {
 
     setIsSubmitting(true);
     try {
-      const urlEncodedBody = new URLSearchParams();
-      urlEncodedBody.append('form-name', 'gaming-subscribers');
-      urlEncodedBody.append('email', emailStr);
-      urlEncodedBody.append('country', subscriptionCountry);
-      if (subscriptionBotField) {
-        urlEncodedBody.append('bot-field', subscriptionBotField);
-      }
-
-      const response = await fetch('/', {
+      const response = await fetch('/api/subscribe', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/json',
         },
-        body: urlEncodedBody.toString(),
+        body: JSON.stringify({
+          email: emailStr,
+          country: subscriptionCountry,
+        }),
       });
 
       const contentType = response.headers.get('content-type');

@@ -5,6 +5,7 @@ import crypto from "crypto";
 import { createServer as createViteServer } from "vite";
 import { initializeApp } from "firebase/app";
 import { getFirestore, doc, setDoc, Timestamp } from "firebase/firestore";
+import { appendToGoogleSheet } from "./src/lib/googleSheets.js";
 
 const app = express();
 const PORT = 3000;
@@ -200,6 +201,27 @@ app.post("/api/subscribe", async (req, res) => {
         success: false,
         error: "This Email Address is already registered in our gaming community!",
       });
+    }
+
+    // Google Sheets synchronization (if credentials exist)
+    if (
+      process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL &&
+      process.env.GOOGLE_PRIVATE_KEY &&
+      process.env.GOOGLE_SPREADSHEET_ID
+    ) {
+      try {
+        await appendToGoogleSheet(email, country);
+      } catch (sheetError: any) {
+        if (sheetError.status === 409 || sheetError.message?.includes("already registered")) {
+          return res.status(409).json({
+            success: false,
+            error: sheetError.message || "This Email Address is already registered in our gaming community!",
+          });
+        }
+        console.error("Google Sheets append failed:", sheetError);
+      }
+    } else {
+      console.warn("Google Sheets credentials are not configured in local environment variables. Skipping Sheets action.");
     }
 
     // Enforce hash-based ID to ensure the write is classified as "create" by security rules
