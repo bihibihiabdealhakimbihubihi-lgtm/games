@@ -1,0 +1,53 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // 1. Global Safety Net: default-deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // 2. Subscriptions collection rules
+    match /subscriptions/{subscriptionId} {
+      // Allow creation with strict validation
+      allow create: if (
+        isValidId(subscriptionId) && 
+        isValidSubscription(request.resource.data)
+      );
+
+      // Deny public read, update, delete for PII isolation and security
+      allow read, update, delete: if false;
+    }
+
+    // --- Helper Functions ---
+    
+    // ID Poisoning guard
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Strict validation blueprint (Type and shape checks)
+    function isValidSubscription(data) {
+      return (
+        // Exact keys mapping (No shadow keys)
+        data.keys().hasAll(['email', 'country', 'createdAt']) &&
+        data.keys().size() == 3 &&
+        
+        // Email string structure and field boundaries
+        data.email is string &&
+        data.email.size() >= 5 &&
+        data.email.size() <= 254 &&
+        data.email.matches('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$') &&
+        
+        // Country validation
+        data.country is string &&
+        data.country.size() >= 2 &&
+        data.country.size() <= 100 &&
+        
+        // Temporal integrity: enforce authentic server time
+        data.createdAt is timestamp &&
+        data.createdAt == request.time
+      );
+    }
+  }
+}

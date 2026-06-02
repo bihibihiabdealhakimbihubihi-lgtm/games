@@ -1,0 +1,32 @@
+{
+  "entities": {
+    "subscriptions": {
+      "title": "Subscribers List",
+      "description": "Gaming community email subscription form submissions",
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Subscriber's email address"
+        },
+        "country": {
+          "type": "string",
+          "description": "Subscriber's country"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The exact time the subscription was recorded"
+        }
+      },
+      "required": ["email", "country", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/subscriptions/{subscriptionId}": {
+      "schema": "subscriptions",
+      "description": "Store all community subscriptions"
+    }
+  }
+}
