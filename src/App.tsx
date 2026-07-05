@@ -107,141 +107,159 @@ export default function App() {
       </div>
       
       {/* Main Content Container */}
-      <main className="max-w-3xl mx-auto px-4 pt-12 pb-20 relative z-10">
-        <div className="space-y-8">
-          {/* Advanced Search & Filter Section */}
-          <div className="space-y-6">
-            {/* Search Bar */}
-            <div className="relative group">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-white transition-colors" />
-              <input
-                type="text"
-                placeholder="Search games..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-[#111111] border border-[#222222] rounded-xl py-4 pl-12 pr-4 text-white placeholder-gray-500 focus:outline-hidden focus:border-[#00FF00]/30 focus:ring-1 focus:ring-[#00FF00]/30 transition-all shadow-lg"
-              />
-            </div>
-
-            {/* Controls Row */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              {/* View Toggles */}
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => setViewMode('grid')}
-                  className={`p-2.5 rounded-xl border transition-all ${
-                    viewMode === 'grid' 
-                      ? 'bg-[#111111] border-[#00FF00]/40 text-[#00FF00] shadow-[0_0_15px_rgba(0,255,0,0.1)]' 
-                      : 'bg-[#111111] border-[#222222] text-gray-500 hover:border-[#333333]'
-                  }`}
-                >
-                  <LayoutGrid className="w-5 h-5" />
-                </button>
-                <button
-                  onClick={() => setViewMode('list')}
-                  className={`p-2.5 rounded-xl border transition-all ${
-                    viewMode === 'list' 
-                      ? 'bg-[#111111] border-[#00FF00]/40 text-[#00FF00] shadow-[0_0_15px_rgba(0,255,0,0.1)]' 
-                      : 'bg-[#111111] border-[#222222] text-gray-500 hover:border-[#333333]'
-                  }`}
-                >
-                  <List className="w-5 h-5" />
-                </button>
+      <main className="max-w-3xl lg:max-w-6xl mx-auto px-4 pt-12 pb-20 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8 items-start">
+          <div className="space-y-8">
+            {/* Advanced Search & Filter Section */}
+            <div className="space-y-6">
+              {/* Search Bar */}
+              <div className="relative group">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-white transition-colors" />
+                <input
+                  type="text"
+                  placeholder="Search games..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full bg-[#111111] border border-[#222222] rounded-xl py-4 pl-12 pr-4 text-white placeholder-gray-500 focus:outline-hidden focus:border-[#00FF00]/30 focus:ring-1 focus:ring-[#00FF00]/30 transition-all shadow-lg"
+                />
               </div>
 
-              {/* Category Filters */}
-              <div className="flex items-center gap-2 overflow-x-auto pb-2 sm:pb-0 no-scrollbar">
-                {CATEGORIES.map((cat) => (
+              {/* Controls Row */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                {/* View Toggles */}
+                <div className="flex items-center gap-2">
                   <button
-                    key={cat.name}
-                    onClick={() => setActiveCategory(cat.name)}
-                    className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border whitespace-nowrap transition-all ${
-                      activeCategory === cat.name
-                        ? 'bg-[#111111] border-[#00FF00]/40 text-[#00FF00] shadow-[0_0_15px_rgba(0,255,0,0.1)]'
-                        : 'bg-[#111111] border-[#222222] text-gray-400 hover:border-[#333333] hover:text-white'
+                    onClick={() => setViewMode('grid')}
+                    className={`p-2.5 rounded-xl border transition-all ${
+                      viewMode === 'grid' 
+                        ? 'bg-[#111111] border-[#00FF00]/40 text-[#00FF00] shadow-[0_0_15px_rgba(0,255,0,0.1)]' 
+                        : 'bg-[#111111] border-[#222222] text-gray-500 hover:border-[#333333]'
                     }`}
                   >
-                    <cat.icon className="w-4 h-4" />
-                    <span className="text-sm font-medium">{cat.name}</span>
+                    <LayoutGrid className="w-5 h-5" />
                   </button>
-                ))}
+                  <button
+                    onClick={() => setViewMode('list')}
+                    className={`p-2.5 rounded-xl border transition-all ${
+                      viewMode === 'list' 
+                        ? 'bg-[#111111] border-[#00FF00]/40 text-[#00FF00] shadow-[0_0_15px_rgba(0,255,0,0.1)]' 
+                        : 'bg-[#111111] border-[#222222] text-gray-500 hover:border-[#333333]'
+                    }`}
+                  >
+                    <List className="w-5 h-5" />
+                  </button>
+                </div>
+
+                {/* Category Filters */}
+                <div className="flex items-center gap-2 overflow-x-auto pb-2 sm:pb-0 no-scrollbar">
+                  {CATEGORIES.map((cat) => (
+                    <button
+                      key={cat.name}
+                      onClick={() => setActiveCategory(cat.name)}
+                      className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border whitespace-nowrap transition-all ${
+                        activeCategory === cat.name
+                          ? 'bg-[#111111] border-[#00FF00]/40 text-[#00FF00] shadow-[0_0_15px_rgba(0,255,0,0.1)]'
+                          : 'bg-[#111111] border-[#222222] text-gray-400 hover:border-[#333333] hover:text-white'
+                      }`}
+                    >
+                      <cat.icon className="w-4 h-4" />
+                      <span className="text-sm font-medium">{cat.name}</span>
+                    </button>
+                  ))}
+                </div>
               </div>
+            </div>
+
+            <div className={viewMode === 'grid' ? "grid grid-cols-1 sm:grid-cols-2 gap-4" : "flex flex-col gap-4"}>
+              <AnimatePresence mode="popLayout">
+                {filteredGames.map((game, index) => (
+                  <motion.div
+                    key={game.title}
+                    layout
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ 
+                      duration: 0.2, 
+                      delay: index * 0.02,
+                      ease: "easeOut"
+                    }}
+                    onClick={() => handleGameClick(game)}
+                    className={`group relative bg-[#111111] border border-[#222222] hover:bg-[#161616] hover:border-[#00FF00]/20 rounded-2xl cursor-pointer transition-all duration-300 hover:shadow-[0_8px_30px_rgba(0,0,0,0.6)] ${
+                      viewMode === 'grid' ? 'p-4 flex flex-col gap-4' : 'p-4 flex items-center gap-4'
+                    }`}
+                  >
+                    {/* Inner Highlight Effect */}
+                    <div className="absolute inset-0 rounded-2xl border border-white/5 pointer-events-none" />
+
+                    {/* Thumbnail */}
+                    <div className={`shrink-0 rounded-xl overflow-hidden bg-[#222222] border border-[#333333] ${
+                      viewMode === 'grid' ? 'w-full aspect-video' : 'w-16 h-16'
+                    }`}>
+                      <img
+                        src={game.image}
+                        alt={game.title}
+                        referrerPolicy="no-referrer"
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+                    </div>
+
+                    {/* Text Block */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between gap-2 mb-1">
+                        <h3 className="text-white font-semibold text-base truncate leading-tight">
+                          {game.title}
+                        </h3>
+                        {viewMode === 'list' && (
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-[#00FF00]/60 bg-[#00FF00]/5 px-2 py-0.5 rounded-md border border-[#00FF00]/10">
+                            {game.category}
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-gray-400 text-xs line-clamp-2 leading-relaxed">
+                        {game.description}
+                      </p>
+                    </div>
+
+                    {/* Right Icon (List mode only) */}
+                    {viewMode === 'list' && (
+                      <div className="shrink-0 text-gray-600 group-hover:text-[#00FF00] transition-colors">
+                        <ChevronRight className="w-5 h-5" />
+                      </div>
+                    )}
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+
+              {filteredGames.length === 0 && (
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="col-span-full text-center py-20 text-gray-500"
+                >
+                  No games found in this category
+                </motion.div>
+              )}
             </div>
           </div>
 
-          <div className={viewMode === 'grid' ? "grid grid-cols-1 sm:grid-cols-2 gap-4" : "flex flex-col gap-4"}>
-            <AnimatePresence mode="popLayout">
-              {filteredGames.map((game, index) => (
-                <motion.div
-                  key={game.title}
-                  layout
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ 
-                    duration: 0.2, 
-                    delay: index * 0.02,
-                    ease: "easeOut"
-                  }}
-                  onClick={() => handleGameClick(game)}
-                  className={`group relative bg-[#111111] border border-[#222222] hover:bg-[#161616] hover:border-[#00FF00]/20 rounded-2xl cursor-pointer transition-all duration-300 hover:shadow-[0_8px_30px_rgba(0,0,0,0.6)] ${
-                    viewMode === 'grid' ? 'p-4 flex flex-col gap-4' : 'p-4 flex items-center gap-4'
-                  }`}
-                >
-                  {/* Inner Highlight Effect */}
-                  <div className="absolute inset-0 rounded-2xl border border-white/5 pointer-events-none" />
-
-                  {/* Thumbnail */}
-                  <div className={`shrink-0 rounded-xl overflow-hidden bg-[#222222] border border-[#333333] ${
-                    viewMode === 'grid' ? 'w-full aspect-video' : 'w-16 h-16'
-                  }`}>
-                    <img
-                      src={game.image}
-                      alt={game.title}
-                      referrerPolicy="no-referrer"
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
-                  </div>
-
-                  {/* Text Block */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between gap-2 mb-1">
-                      <h3 className="text-white font-semibold text-base truncate leading-tight">
-                        {game.title}
-                      </h3>
-                      {viewMode === 'list' && (
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-[#00FF00]/60 bg-[#00FF00]/5 px-2 py-0.5 rounded-md border border-[#00FF00]/10">
-                          {game.category}
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-gray-400 text-xs line-clamp-2 leading-relaxed">
-                      {game.description}
-                    </p>
-                  </div>
-
-                  {/* Right Icon (List mode only) */}
-                  {viewMode === 'list' && (
-                    <div className="shrink-0 text-gray-600 group-hover:text-[#00FF00] transition-colors">
-                      <ChevronRight className="w-5 h-5" />
-                    </div>
-                  )}
-                </motion.div>
-              ))}
-            </AnimatePresence>
-
-            {filteredGames.length === 0 && (
-              <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="col-span-full text-center py-20 text-gray-500"
-              >
-                No games found in this category
-              </motion.div>
-            )}
+          {/* Adsterra Native Banner Ad Column */}
+          <div className="w-full bg-[#111111] border border-[#222222] rounded-2xl p-5 flex flex-col items-center">
+            {/* Advertisement Header Label */}
+            <div className="w-full flex items-center justify-between border-b border-white/5 pb-2.5 mb-3">
+              <span className="text-gray-500 text-[10px] font-bold uppercase tracking-wider">
+                Advertisement
+              </span>
+              <span className="text-[#00FF00]/80 text-[10px] font-bold uppercase tracking-wider">
+                إعلان
+              </span>
+            </div>
+            
+            {/* Independent Ad Container wrapper */}
+            <div className="w-full flex justify-center">
+              <AdsterraAd />
+            </div>
           </div>
-
-
         </div>
       </main>
 
