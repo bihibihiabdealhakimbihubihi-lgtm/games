@@ -8,6 +8,7 @@ import { Search, ChevronRight, ArrowUp, LayoutGrid, List, Flag, Globe, Truck, Ta
 import { motion, AnimatePresence } from 'motion/react';
 import { GAMES_DATA } from './data/games';
 import { Game } from './types';
+import AdsterraAd from './components/AdsterraAd';
 
 const CATEGORIES = [
   { name: 'All', icon: Gamepad2 },
@@ -279,10 +280,10 @@ export default function App() {
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="relative w-full max-w-sm bg-[#1a1a1a] rounded-[2rem] p-8 shadow-2xl border border-white/5 overflow-hidden"
+              className="relative w-full max-w-md bg-[#1a1a1a] rounded-[2rem] p-6 sm:p-8 shadow-2xl border border-white/5 max-h-[90vh] overflow-y-auto"
             >
               {/* Game Context Header */}
-              <div className="flex items-center gap-4 mb-8 p-3 bg-white/5 rounded-2xl border border-white/5">
+              <div className="flex items-center gap-4 mb-6 p-3 bg-white/5 rounded-2xl border border-white/5">
                 <div className="w-12 h-12 rounded-xl overflow-hidden shrink-0 border border-white/10">
                   <img 
                     src={selectedGame.image} 
@@ -297,13 +298,26 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="text-center space-y-3 mb-8">
+              <div className="text-center space-y-3 mb-6">
                 <h2 className="text-2xl font-bold text-white tracking-tight">
                   Choose your device
                 </h2>
                 <p className="text-gray-400 text-sm leading-relaxed">
                   Select your device to continue with your chosen game.
                 </p>
+              </div>
+
+              {/* Game Description Section */}
+              <div className="bg-white/5 border border-white/5 rounded-2xl p-4 mb-4 text-left">
+                <p className="text-[#00FF00] font-bold text-[10px] uppercase tracking-widest mb-1">Game Description</p>
+                <p className="text-gray-300 text-xs leading-relaxed">
+                  {selectedGame.description}
+                </p>
+              </div>
+
+              {/* Adsterra Native Banner Ad - Placed exactly after game description and before buttons */}
+              <div className="w-full mb-6">
+                <AdsterraAd />
               </div>
 
               {/* Device Buttons */}
