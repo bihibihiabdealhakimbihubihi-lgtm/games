@@ -28,7 +28,7 @@ export default function AdsterraAd() {
   }, []);
 
   return (
-    <div ref={containerRef} className="w-full my-4 flex flex-col items-center justify-center min-h-[100px] bg-black/10 rounded-xl p-2 border border-white/5">
+    <div ref={containerRef} className="w-full">
       {/* Container with the exact ID provided by Adsterra */}
       <div id="container-6ddf26692331f28623b514bd9d7ce4d5" className="w-full"></div>
     </div>

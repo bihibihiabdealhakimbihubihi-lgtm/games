@@ -334,9 +334,7 @@ export default function App() {
               </div>
 
               {/* Adsterra Native Banner Ad - Placed exactly after game description and before buttons */}
-              <div className="w-full mb-6">
-                <AdsterraAd />
-              </div>
+              <AdsterraAd />
 
               {/* Device Buttons */}
               <div className="space-y-3">
